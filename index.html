@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>祝杜稳发生日快乐！</title>
+  <style>
+    :root {
+      --primary-color: #ff7675;
+      --secondary-color: #74b9ff;
+      --bg-color: #f7f1e3;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+      font-family: 'Microsoft YaHei', sans-serif;
+      overflow: hidden;
+    }
+
+    /* 气球动画 */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 50px;
+      height: 70px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.6;
+      z-index: 1;
+      animation: float 8s infinite ease-in;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-120vh) rotate(20deg);
+        opacity: 0;
+      }
+    }
+
+    /* 贺卡容器 */
+    .card {
+      position: relative;
+      width: 350px;
+      height: 450px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 40px 20px;
+      z-index: 10;
+      border: 8px solid #fff;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card-border {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      border: 2px dashed var(--primary-color);
+      border-radius: 15px;
+      pointer-events: none;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+
+    .name {
+      color: #2d3436;
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      color: #636e72;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      padding: 0 20px;
+    }
+
+    .cake {
+      font-size: 4rem;
+      margin: 20px 0;
+    }
+
+    .footer {
+      margin-top: 30px;
+      color: var(--secondary-color);
+      font-weight: bold;
+    }
+
+    /* 装饰性小圆点 */
+    .dots {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script>
+    function createBalloon() {
+      const colors = ['#ff7675', '#74b9ff', '#55efc4', '#ffeaa7', '#a29bfe'];
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      balloon.style.animationDuration = (Math.random() * 4 + 6) + 's';
+      document.body.appendChild(balloon);
+
+      setTimeout(() => balloon.remove(), 8000);
+    }
+    setInterval(createBalloon, 700);
+  </script>
+
+  <div class="card">
+    <div class="card-border"></div>
+    <div class="cake">🎂</div>
+    <h1>生日快乐!</h1>
+    <span class="name">致：杜稳发</span>
+
+    <div class="message">
+      愿你在新的一岁里，<br>
+      眼里有星辰，心中有大海。<br>
+      所有的努力都有收获，<br>
+      所有的梦想都能如愿。
+    </div>
+
+    <div class="footer">
+      Happy Birthday to You! ✨
+    </div>
+  </div>
+
+</body>
+
+</html>
