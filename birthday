@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>祝马显明生日快乐</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(120deg, #f0e8ff, #e6f4ff);
+    font-family: "-apple-system", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* 防止飘落小点产生网页滚动条 */
+    position: relative;
+}
+.box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 50px 45px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(128, 90, 213, 0.15);
+    text-align: center;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    
+    /* 响应式核心：默认是大屏/电脑端的尺寸 */
+    width: 90%;
+    max-width: 420px; 
+    transition: all 0.3s ease; /* 让尺寸过渡更平滑 */
+}
+h1 {
+    font-size: 32px;
+    color: #805ad5;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+.age {
+    font-size: 15px;
+    color: #8c8c8c;
+    background: #f3f0ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.name {
+    font-size: 26px;
+    color: #2c3e50;
+    margin: 18px 0;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.content {
+    font-size: 16px;
+    color: #555;
+    line-height: 2.2;
+    font-weight: 400;
+}
+.bless {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #6c5ce7;
+    font-weight: bold;
+    border-top: 1px dashed #e1d8f5;
+    padding-top: 20px;
+}
+
+/* ========================================================
+   📱 移动端/手机端响应式媒体查询 (当屏幕宽度小于 480px 时生效)
+   ======================================================== */
+@media screen and (max-width: 480px) {
+    .box {
+        padding: 35px 25px; /* 缩小内边距，给文字留出更多空间 */
+        border-radius: 20px;
+    }
+    h1 {
+        font-size: 26px; /* 稍微缩小标题，防止太突兀 */
+        margin-bottom: 8px;
+    }
+    .age {
+        font-size: 13px;
+        padding: 3px 10px;
+    }
+    .name {
+        font-size: 22px; /* 缩小名字字号 */
+        margin: 14px 0;
+    }
+    .content {
+        font-size: 14px; /* 优化手机端正文阅读体验 */
+        line-height: 2.0;
+    }
+    .bless {
+        margin-top: 22px;
+        font-size: 14px;
+        padding-top: 15px;
+    }
+    .music-btn {
+        top: 15px;
+        right: 15px;
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+    }
+}
+
+/* 轻柔飘落小点 */
+.dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #b8a9f0;
+    border-radius: 50%;
+    opacity: 0.5;
+    pointer-events: none;
+    animation: slowFall 7s linear infinite;
+}
+@keyframes slowFall {
+    0% { transform: translateY(-20px); }
+    100% { transform: translateY(105vh); }
+}
+
+/* 音乐控制按钮 */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+    font-size: 18px;
+    transition: transform 0.3s;
+}
+.music-btn.playing {
+    animation: rotate 4s linear infinite;
+}
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>🎂 生日快乐 🎂</h1>
+    <div class="age">2009年出生 · 十七周岁少年</div>
+    <div class="name">弟弟 马显明</div>
+    <div class="content">
+        岁岁年年，平安喜乐<br>
+        向阳生长，未来可期<br>
+        无忧无虑，万事称心
+    </div>
+    <div class="bless">哥哥永远守护，岁岁皆安康</div>
+</div>
+
+<div class="music-btn" id="musicBtn">🎵</div>
+
+<audio id="bgMusic" loop>
+    <source src="https://www.soundjay.com/misc/birthday-song-1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// 1. 背景柔和飘落小点逻辑
+function createDot() {
+    let d = document.createElement('div');
+    d.className = 'dot';
+    let size = Math.random() * 6 + 6;
+    d.style.width = size + 'px';
+    d.style.height = size + 'px';
+    d.style.left = Math.random() * 95 + '%'; /* 略微收缩防溢出 */
+    d.style.animationDuration = Math.random() * 4 + 6 + 's';
+    document.body.appendChild(d);
+    
+    setTimeout(() => d.remove(), 10000);
+}
+
+// 初始化随机点
+for(let i=0; i<15; i++) {
+    setTimeout(() => {
+        let d = document.createElement('div');
+        d.className = 'dot';
+        d.style.left = Math.random() * 95 + '%';
+        d.style.top = Math.random() * 90 + 'vh';
+        d.style.animationDuration = Math.random() * 4 + 6 + 's';
+        document.body.appendChild(d);
+    }, i * 100);
+}
+setInterval(createDot, 400);
+
+// 2. 音频控制逻辑
+const music = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+
+function playAudio() {
+    music.play().then(() => {
+        musicBtn.classList.add('playing');
+    }).catch(err => {
+        console.log("等待交互触发音频");
+    });
+}
+
+musicBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (music.paused) {
+        music.play();
+        musicBtn.classList.add('playing');
+    } else {
+        music.pause();
+        musicBtn.classList.remove('playing');
+    }
+});
+
+document.addEventListener('click', () => {
+    if (music.paused) {
+        playAudio();
+    }
+}, { once: true });
+</script>
+
+</body>
+</html>
